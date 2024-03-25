@@ -1,43 +1,40 @@
 #include <iostream>
 
-// Функция сортировки прямыми включениями
+
 void inclusionSort(int* num, int size, int& comparison, int& swap)
 {
-    // Для всех элементов кроме начального
     for (int i = 1; i < size; i++)
     {
-        int value = num[i]; // запоминаем значение элемента
-        int index = i;     // и его индекс
+        int value = num[i]; 
+        int index = i;     
         while ((index > 0) && (num[index - 1] > value))
-        {   // смещаем другие элементы к концу массива пока они меньше index
+        {   
             comparison++;
             num[index] = num[index - 1];
             swap++;
-            index--;    // смещаем просмотр к началу массива
+            index--;    
         }
         if (num[index] != value) {
             num[index] = value;
-            swap++;// рассматриваемый элемент помещаем на освободившееся место
+            swap++;
         }
     }
 }
 
-// Функция сортировки прямым выбором
 void selectionSort(int* num, int size, int& comparison, int& swap)
 {
-    int min, temp; // для поиска минимального элемента и для обмена
+    int min, temp; 
     for (int i = 0; i < size - 1; i++)
     {
-        min = i; // запоминаем индекс текущего элемента
-        // ищем минимальный элемент чтобы поместить на место i-ого
-        for (int j = i + 1; j < size; j++)  // для остальных элементов после i-ого
+        min = i; 
+        for (int j = i + 1; j < size; j++)  
         {
             comparison++;
-            if (num[j] < num[min]) // если элемент меньше минимального,
-                min = j;       // запоминаем его индекс в min
+            if (num[j] < num[min]) 
+                min = j;       
         }
         if (num[i] != num[min]) {
-            temp = num[i];      // меняем местами i-ый и минимальный элементы
+            temp = num[i];      
             num[i] = num[min];
             num[min] = temp;
             swap++;
@@ -45,19 +42,17 @@ void selectionSort(int* num, int size, int& comparison, int& swap)
     }
 }
 
-// Функция сортировки прямым обменом (метод "пузырька")
 void bubbleSort(int* num, int size, int& comparison, int& swap)
 {
-    // Для всех элементов
     for (int i = 0; i < size - 1; i++)
     {
-        for (int j = (size - 1); j > i; j--) // для всех элементов после i-ого
+        for (int j = (size - 1); j > i; j--) 
         {
             comparison++;
-            if (num[j - 1] > num[j]) // если текущий элемент меньше предыдущего
+            if (num[j - 1] > num[j]) 
             {
                 swap++;
-                int temp = num[j - 1]; // меняем их местами
+                int temp = num[j - 1]; 
                 num[j - 1] = num[j];
                 num[j] = temp;
             }
@@ -65,34 +60,32 @@ void bubbleSort(int* num, int size, int& comparison, int& swap)
     }
 }
 
-// Функция сортировки Шелла
+
 void shellSort(int* num, int size, int& comparison, int& swap)
 {
-    int increment = 4;    // начальное приращение сортировки
-    while (increment > 0)  // пока существует приращение
+    int increment = 4;   
+    while (increment > 0) 
     {
-        for (int i = 0; i < size; i++)  // для всех элементов массива
+        for (int i = 0; i < size; i++)  
         {
-            int j = i;          // сохраняем индекс и элемент
+            int j = i;          
             int temp = num[i];
-            // просматриваем остальные элементы массива, отстоящие от j-ого
-            // на величину приращения
             while ((j >= increment) && (num[j - increment] > temp))
-            {  // пока отстоящий элемент больше текущего
+            {  
                 comparison++;
-                num[j] = num[j - increment]; // перемещаем его на текущую позицию
+                num[j] = num[j - increment]; 
                 swap++;
-                j = j - increment;       // переходим к следующему отстоящему элементу
+                j = j - increment;       
             }
             if (num[j] != temp) {
                 num[j] = temp;
-                swap++;// на выявленное место помещаем сохранённый элемент
+                swap++;
             }
         }
-        if (increment > 1)      // делим приращение на 2
+        if (increment > 1)    
             increment = increment / 2;
-        else if (increment == 1)   // последний проход завершён,
-            break;  // выходим из цикла
+        else if (increment == 1)  
+            break;  
     }
 }
 
